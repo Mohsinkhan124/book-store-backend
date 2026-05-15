@@ -8,15 +8,15 @@ import router from "./routes/bookRoutes.js";
 import authRouter from "./routes/authRoutes.js";
 import cors from "cors";
 
+const app = express();
+app.use(express.json());
+
 app.use(cors({
     origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization "],
+    allowedHeaders: ["Content-Type", "Authorization"],
 }));
-
-const app = express();
-app.use(express.json());
-app.use(cors());
+    
 const port = process.env.PORT || 4000;
 
 // Database connect karo
