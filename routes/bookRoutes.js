@@ -14,6 +14,10 @@ const router = express.Router();
 router.get("/books", getAllBooks);
 router.get("/books/:id", getSingleBook);
 
+// 🔒 Read & Download (login required)
+router.get("/books/:id/read", protect, readBook);
+router.get("/books/:id/download", protect, downloadBook);
+
 // 🔒 Admin only routes (sirf admin create/update/delete kar sakta hai)
 router.post("/books", protect, adminOnly, createBook);
 router.put("/books/:id", protect, adminOnly, updateBook);

@@ -70,3 +70,44 @@ export const deleteBook = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+// @desc    Read book online (view PDF in browser)
+// @route   GET /api/books/:id/read
+export const readBook = async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.id);
+    if (!book) {
+      return res.status(404).json({ success: false, message: "Book not found" });
+    }
+    
+    // Return PDF URL for embedding
+    res.status(200).json({ 
+      success: true, 
+      pdfUrl: book.pdfUrl,
+      title: book.title,
+      author: book.author
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// @desc    Download book PDF
+// @route   GET /api/books/:id/download
+export const downloadBook = async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.id);
+    if (!book) {
+      return res.status(404).json({ success: false, message: "Book not found" });
+    }
+    
+    // Redirect to PDF URL or send file info
+    res.status(200).json({ 
+      success: true, 
+      downloadUrl: book.pdfUrl,
+      fileName: `${book.title}.pdf`
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
