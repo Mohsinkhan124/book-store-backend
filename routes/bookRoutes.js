@@ -2,8 +2,10 @@ import express from "express";
 import {
   createBook,
   deleteBook,
+  downloadBook,
   getAllBooks,
   getSingleBook,
+  readBook,
   updateBook,
 } from "../controller/bookController.js";
 import { protect, adminOnly } from "../middleware/authMiddleware.js";
