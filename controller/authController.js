@@ -123,6 +123,10 @@ export const forgotPassword = async (req, res) => {
     // Store OTP
     resetTokens[email] = { otp, expiresAt };
     
+    // ✅ Frontend URL (local ya production)
+    const frontendUrl = "http://localhost:5173";
+    const resetLink = `${frontendUrl}/reset-password?email=${encodeURIComponent(email)}&otp=${otp}`;
+    
     // Email config
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -132,14 +136,27 @@ export const forgotPassword = async (req, res) => {
       },
     });
     
+    // ✅ Updated email template with reset link
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
-      subject: "Password Reset OTP",
-      html: `<h3>Your OTP is: <b>${otp}</b></h3><p>This OTP expires in 10 minutes.</p>`,
+      subject: "Password Reset - LuminaBooks",
+      html: `
+        <div style="font-family: Georgia, serif; max-width: 500px; padding: 20px; border: 1px solid #e0e0e0; border-radius: 12px;">
+          <h2 style="color: #5A5A40;">📚 LuminaBooks</h2>
+          <h3>🔐 Password Reset Request</h3>
+          <p>Your OTP is: <strong style="font-size: 28px; color: #5A5A40;">${otp}</strong></p>
+          <p>👉 <a href="${resetLink}" style="background: #5A5A40; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; display: inline-block;">Click here to reset password</a></p>
+          <p>Or copy this link to your browser:</p>
+          <p style="background: #f5f5f5; padding: 10px; border-radius: 8px; word-break: break-all;">${resetLink}</p>
+          <p>⏰ This OTP expires in <strong>10 minutes</strong>.</p>
+          <hr />
+          <p style="color: #888; font-size: 12px;">If you didn't request this, ignore this email.</p>
+        </div>
+      `,
     });
     
-    res.json({ message: "OTP sent to email", status: true });
+    res.json({ message: "Reset link sent to email", status: true });
   } catch (error) {
     res.status(500).json({ message: error.message, status: false });
   }
