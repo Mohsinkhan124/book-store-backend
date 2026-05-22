@@ -14,8 +14,7 @@ const bookSchema = new mongoose.Schema(
     },
     price: {
       type: Number,
-      required: [true, "Price is required"],
-      min: [0, "Price cannot be negative"],
+      default: 0,  // ✅ Not required anymore
     },
     coverImage: {
       type: String,
@@ -23,21 +22,19 @@ const bookSchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      required: [true, "Description is required"],
+      default: "",  // ✅ Not required anymore
     },
     stock: {
       type: Number,
-      required: true,
-      default: 1,
-      min: [0, "Stock cannot be negative"],
+      default: 1,  // ✅ Not required anymore
     },
     pdfUrl: {
       type: String,
-      required: true,  // PDF link mandatory for books
+      required: true,
     },
   },
   {
-    timestamps: true, // adds createdAt and updatedAt automatically
+    timestamps: true,
   }
 );
 

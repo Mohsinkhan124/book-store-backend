@@ -6,10 +6,21 @@ import Book from "../model/Book.js";
 // @route   POST /api/books
 export const createBook = async (req, res) => {
   try {
-    const book = new Book(req.body);
+    const bookData = {
+      title: req.body.title,
+      author: req.body.author,
+      price: req.body.price || 0,
+      coverImage: req.body.coverImage || req.body.imageUrl || "https://via.placeholder.com/150",
+      description: req.body.description || "No description available",
+      stock: req.body.stock || 1,
+      pdfUrl: req.body.pdfUrl,
+    };
+    
+    const book = new Book(bookData);
     await book.save();
     res.status(201).json({ success: true, data: book });
   } catch (error) {
+    console.error("Create book error:", error);
     res.status(400).json({ success: false, message: error.message });
   }
 };
