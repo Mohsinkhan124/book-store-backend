@@ -124,7 +124,7 @@ export const forgotPassword = async (req, res) => {
     resetTokens[email] = { otp, expiresAt };
     
     // ✅ Frontend URL (local ya production)
-    const frontendUrl = "http://localhost:5173";
+    const frontendUrl = "https://lumina-books-zeta.vercel.app/";
     const resetLink = `${frontendUrl}/reset-password?email=${encodeURIComponent(email)}&otp=${otp}`;
     
     // Email config
@@ -143,13 +143,13 @@ export const forgotPassword = async (req, res) => {
       subject: "Password Reset - LuminaBooks",
       html: `
         <div style="font-family: Georgia, serif; max-width: 500px; padding: 20px; border: 1px solid #e0e0e0; border-radius: 12px;">
-          <h2 style="color: #5A5A40;">📚 LuminaBooks</h2>
-          <h3>🔐 Password Reset Request</h3>
+          <h2 style="color: #5A5A40;">LuminaBooks</h2>
+          <h3>Password Reset Request</h3>
           <p>Your OTP is: <strong style="font-size: 28px; color: #5A5A40;">${otp}</strong></p>
-          <p>👉 <a href="${resetLink}" style="background: #5A5A40; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; display: inline-block;">Click here to reset password</a></p>
+          <p><a href="${resetLink}" style="background: #5A5A40; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; display: inline-block;">Click here to reset password</a></p>
           <p>Or copy this link to your browser:</p>
           <p style="background: #f5f5f5; padding: 10px; border-radius: 8px; word-break: break-all;">${resetLink}</p>
-          <p>⏰ This OTP expires in <strong>10 minutes</strong>.</p>
+          <p>This OTP expires in <strong>10 minutes</strong>.</p>
           <hr />
           <p style="color: #888; font-size: 12px;">If you didn't request this, ignore this email.</p>
         </div>
