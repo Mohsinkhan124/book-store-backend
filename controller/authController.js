@@ -124,7 +124,7 @@ export const forgotPassword = async (req, res) => {
     resetTokens[email] = { otp, expiresAt };
     
     // ✅ Frontend URL (local ya production)
-    const frontendUrl = "http://localhost:5000"; // Update karo agar frontend alag port ya domain pe hai
+    const frontendUrl = "https://lumina-books-zeta.vercel.app/";
     const resetLink = `${frontendUrl}/reset-password?email=${encodeURIComponent(email)}&otp=${otp}`;
     
     // Email config
