@@ -17,7 +17,7 @@ app.use(cors({
     allowedHeaders: ["Content-Type", "Authorization"],
 }));
     
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 5000;
 
 // Database connect karo
 connectDB();
